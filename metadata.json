@@ -1,0 +1,8 @@
+{
+  "unique_identifier": "rust_starter",
+  "name": "rust_starter",
+  "author": "Zebreus",
+  "badges": ["why2025", "rust"],
+  "binary_path": "main.elf",
+  "application": [{ "executable": "main.elf" }]
+}

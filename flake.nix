@@ -40,9 +40,8 @@
             "rustfmt"
           ])
         ];
-
       in
-      rec {
+      {
         name = "why2025-rust-starter";
 
         devShell = pkgs.mkShell {

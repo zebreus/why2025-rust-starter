@@ -21,7 +21,6 @@ fi
 cargo build --release
 
 LOCAL_ELF_NAME=target/riscv32imafc-unknown-none-elf/release/${CRATE_NAME}
-#LOCAL_ELF_NAME=sdl_test.elf
 REMOTE_ELF_NAME=main.elf
 
 curl -X POST -H "badgehub-api-token: ${BADGEHUB_API_TOKEN}" -F "file=@./${LOCAL_ELF_NAME}" https://badge.why2025.org/api/v3/projects/${PROJECT_NAME}/draft/files/${REMOTE_ELF_NAME} \

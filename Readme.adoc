@@ -6,7 +6,8 @@ Run rust projects on the WHY2025 Badge. Just fork this repository and start codi
 
 To build the project just run `cargo build --release`.
 
-You need to have a rust toolchain for `riscv32imafc-unknown-none-elf` installed. If you are using nix, you can run `nix develop .` to get everything set up.
+You need to have a nightly rust toolchain for `riscv32imafc-unknown-none-elf` installed. If you are using nix, you can run `nix develop .` to get everything set up.
+For example run: `rustup toolchain install nightly  -t riscv32imafc-unknown-none-elf`
 
 == Running
 

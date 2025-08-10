@@ -1,0 +1,22 @@
+= Why2025 Badge Starter 
+
+Run rust projects on the WHY2025 Badge. Just fork this repository and start coding.
+
+== Building
+
+To build the project just run `cargo build --release`.
+
+You need to have a rust toolchain for `riscv32imafc-unknown-none-elf` installed. If you are using nix, you can run `nix develop .` to get everything set up.
+
+== Running
+
+I am still looking for an fast way to run the project on a real badge. If you have a suggestion, please open an issue or a pull request asap.
+
+== Publishing
+
+To publish your project to [badgehub](https://badge.why2025.org), first create a new project on the website. You can then obtain an API Token from the projects edit page.
+
+Modify metadata.json to match your project. At least make sure the `unique_identifier` matches the name of your project on badgehub.
+
+Then run `BADGEHUB_API_TOKEN=your_api_token ./publish.sh` to upload your project to badgehub.
+

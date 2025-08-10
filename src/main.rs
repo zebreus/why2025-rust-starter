@@ -33,8 +33,6 @@ use sdl3_sys::{
 
 fn sdl_main() -> Result<(), &'static CStr> {
     if unsafe { SDL_Init(SDL_INIT_VIDEO) } {
-        // println!("Successfully initialized SDL!");
-
         unsafe {
             let window = SDL_CreateWindow(
                 core::mem::transmute("title".as_bytes().as_ptr()),
@@ -53,10 +51,7 @@ fn sdl_main() -> Result<(), &'static CStr> {
                     SDL_Delay(50);
                 }
             }
-
-            // SDL_Quit();
         };
-        Ok(())
     } else {
         Err(unsafe { CStr::from_ptr(SDL_GetError()) })
     }

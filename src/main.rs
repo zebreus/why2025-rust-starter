@@ -2,18 +2,18 @@
 #![no_std]
 #![no_main]
 
-extern "C" {
+// TODO: Rewrite example to do something more interesting
+
+unsafe extern "C" {
     fn printf(format: *const u8, ...) -> i32;
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn main() -> i32 {
-    // sdl_main().unwrap();
-    // println!("Hello, world! (from rust)\n");
     unsafe {
         printf(b"Hello, world! (from rust)\n\0".as_ptr());
     }
-    sdl_main();
+    let _ = sdl_main();
     121
 }
 
@@ -25,7 +25,7 @@ fn panic(_info: &core::panic::PanicInfo) -> ! {
 use core::ffi::CStr;
 use sdl3_sys::{
     error::SDL_GetError,
-    init::{SDL_Init, SDL_Quit, SDL_INIT_VIDEO},
+    init::{SDL_Init, SDL_INIT_VIDEO},
     render::{SDL_CreateRenderer, SDL_RenderClear, SDL_RenderPresent, SDL_SetRenderDrawColor},
     timer::SDL_Delay,
     video::SDL_CreateWindow,
@@ -54,7 +54,7 @@ fn sdl_main() -> Result<(), &'static CStr> {
                 }
             }
 
-            SDL_Quit();
+            // SDL_Quit();
         };
         Ok(())
     } else {

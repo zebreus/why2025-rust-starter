@@ -1,5 +1,5 @@
 {
-  description = "Rust template for the WHY2025 badge";
+  description = "A rust project for the WHY2025 badge";
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
@@ -43,7 +43,7 @@
 
       in
       rec {
-        name = "why2025-badge-starter";
+        name = "why2025-rust-starter";
 
         devShell = pkgs.mkShell {
           LIBCLANG_PATH = "${pkgs.libclang.lib}/lib";
@@ -55,28 +55,22 @@
           ];
         };
 
-        packages.rudelctl =
-          (pkgs.makeRustPlatform {
-            cargo = rustToolchain;
-            rustc = rustToolchain;
-          }).buildRustPackage
-            {
-              pname = "why2025-badge-started";
-              version = "0.1.0";
-
-              src = ./.;
-
-              cargoLock = {
-                lockFile = ./Cargo.lock;
-              };
-
-              meta = {
-                description = "why2025 badge starter";
-                homepage = "https://github.com/zebreus/why2025-badge-starter";
-                license = pkgs.lib.licenses.agpl3Plus;
-              };
-            };
-        packages.default = packages.why2025-badge-starter;
+        # TODO: Crosscompile for riscv32imafc-unknown-none-elf with nix is difficult.
+        # packages.why2025-rust-starter =
+        #   (pkgs.makeRustPlatform {
+        #     cargo = rustToolchain;
+        #     rustc = rustToolchain;
+        #   }).buildRustPackage
+        #     {
+        #       pname = "why2025-rust-starter";
+        #       version = "0.1.0";
+        #       src = ./.;
+        #       cargoLock = {
+        #         lockFile = ./Cargo.lock;
+        #       };
+        #       target = "x86_64-unknown-linux-muslsdfasdf";
+        #     };
+        # packages.default = packages.why2025-rust-starter;
 
         formatter = pkgs.nixfmt-rfc-style;
       }

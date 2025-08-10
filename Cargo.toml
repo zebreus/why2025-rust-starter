@@ -1,30 +1,29 @@
 [package]
-name = "w4"
-version = "0.1.0"
-edition = "2021"
+name = "rust_starter"
+version = "1.0.0"
+edition = "2024"
+authors = ["Zebreus"]
+description = "A starter template for the Why2025 badge Rust app"
+license = "AGPL-3.0"
+repository = "https://github.com/zebreus/why2025-rust-starter"
+keywords = ["why2025", "badge"]
+categories = ["embedded", "no-std", "os"]
 
 [profile.release]
 panic = 'abort'
-lto = true
+lto = "fat"
 [profile.dev]
 panic = 'abort'
-
-# [lib]
-# crate-type = ["staticlib"]
+lto = "thin"
 
 [dependencies]
-lazy_static = { version = "1.4.0", features = [
+lazy_static = { version = "1.4.0", default-features = false, features = [
     "spin_no_std",
-], default-features = false }
+] }
 sdl3-sys = { version = "0.5.4", default-features = false, features = [
     "no-link",
-    # "link-static",
 ] }
 tinywasm = { version = "0.8.0", default-features = false, features = [
-    # "std",
     "parser",
     "logging",
-    # "archive",
-    # "canonicalize_nans",
 ] }
-# sdl3 = { version = "0", features = [], default-features = false }

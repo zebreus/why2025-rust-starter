@@ -4,7 +4,7 @@
   "name": "rust_starter",
   "description": "Run rust projects on the WHY2025 Badge. Just fork this repository and start coding.",
   "categories": ["Uncategorised"],
-  "version": "1.1.0",
+  "version": "1.0.0",
   "author": "Zebreus",
   "icon_map": { "64x64": "ferris_64.png" },
   "license_file": "AGPL3",

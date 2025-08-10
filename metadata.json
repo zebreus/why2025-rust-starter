@@ -1,8 +1,13 @@
 {
+  "git_url": "https://github.com/zebreus/why2025-rust-starter",
   "unique_identifier": "rust_starter",
   "name": "rust_starter",
+  "description": "Run rust projects on the WHY2025 Badge. Just fork this repository and start coding.",
+  "categories": ["Uncategorised"],
+  "version": "1.1.0",
   "author": "Zebreus",
-  "badges": ["why2025", "rust"],
-  "binary_path": "main.elf",
+  "icon_map": { "64x64": "ferris_64.png" },
+  "license_file": "AGPL3",
+  "badges": ["why2025"],
   "application": [{ "executable": "main.elf" }]
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ex
+set -e
 
 CRATE_NAME=${CRATE_NAME:=$(cat Cargo.toml | grep 'name =' | grep -o '".*"' | sed 's/"//g')}
 if test -z "$CRATE_NAME" ; then

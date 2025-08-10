@@ -1,0 +1,23 @@
+[unstable]
+build-std = ["core", "alloc"]
+
+[build]
+target = "riscv32imafc-unknown-none-elf"
+
+[target.riscv32imafc-unknown-none-elf]
+rustflags = [
+    "-Clink-args=-e=main",
+    "-Clink-args=-e",
+    "-Clink-args=main",
+    "-Zexport-executable-symbols",
+    "-Crelocation-model=pic",
+    "-Clink-arg=--shared",
+    "-Clink-arg=--retain-symbols-file=resources/retain.txt",
+    "-Clink-args=--gc-sections",
+    "-Clink-args=--strip-debug",
+    "-Clinker-plugin-lto",
+    "-Copt-level=2",
+    "-Clink-arg=--exclude-libs=libSDL3.a",
+    "-Clink-args=--discard-locals",
+    "-Clink-args=--entry=main",
+]

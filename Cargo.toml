@@ -1,0 +1,30 @@
+[package]
+name = "w4"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+panic = 'abort'
+lto = true
+[profile.dev]
+panic = 'abort'
+
+# [lib]
+# crate-type = ["staticlib"]
+
+[dependencies]
+lazy_static = { version = "1.4.0", features = [
+    "spin_no_std",
+], default-features = false }
+sdl3-sys = { version = "0.5.4", default-features = false, features = [
+    "no-link",
+    # "link-static",
+] }
+tinywasm = { version = "0.8.0", default-features = false, features = [
+    # "std",
+    "parser",
+    "logging",
+    # "archive",
+    # "canonicalize_nans",
+] }
+# sdl3 = { version = "0", features = [], default-features = false }

@@ -26,3 +26,4 @@ lazy_static = { version = "1.4.0", default-features = false, features = [
 sdl3-sys = { version = "0.5.4", default-features = false, features = [
     "no-link",
 ] }
+why2025-badge-sys = "0.1.0"

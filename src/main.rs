@@ -1,55 +1,75 @@
 #![no_std]
 #![no_main]
+extern crate alloc;
 
-use core::ffi::CStr;
-use sdl3_sys::{
-    error::SDL_GetError,
-    init::{SDL_INIT_VIDEO, SDL_Init},
-    render::{SDL_CreateRenderer, SDL_RenderClear, SDL_RenderPresent, SDL_SetRenderDrawColor},
-    timer::SDL_Delay,
-    video::SDL_CreateWindow,
-};
-use why2025_badge_sys::printf;
-
-#[panic_handler]
-fn panic(_info: &core::panic::PanicInfo) -> ! {
-    loop {}
-}
-
-// TODO: Rewrite example to do something more interesting
+use embedded_graphics::prelude::*;
+use mousefood::{TerminalAlignment, prelude::*};
+use ratatui::{Frame, Terminal, widgets::Paragraph};
+use why2025_badge_embedded_graphics::Why2025BadgeWindow;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn main() -> i32 {
     unsafe {
-        printf(b"Hello, world! (from rust)\n\0".as_ptr());
+        why2025_badge_sys::printf(b"Hello, world! (from rust)\n\0".as_ptr());
     }
-    sdl_main();
-    0
+    let mut display = Why2025BadgeWindow::new_floating(
+        Size {
+            width: 400,
+            height: 400,
+        },
+        "Mousefood Demo",
+    );
+
+    let config = EmbeddedBackendConfig {
+        flush_callback: alloc::boxed::Box::new(|d: &mut Why2025BadgeWindow| {
+            d.flush();
+        }),
+        font_regular: embedded_graphics_unicodefonts::MONO_9X15,
+        font_bold: Some(embedded_graphics_unicodefonts::MONO_9X15_BOLD),
+        font_italic: None,
+        vertical_alignment: TerminalAlignment::Center,
+        horizontal_alignment: TerminalAlignment::Center,
+    };
+    let backend = EmbeddedBackend::new(&mut display, config);
+    let mut terminal = Terminal::new(backend).unwrap();
+
+    loop {
+        terminal.draw(draw).unwrap();
+    }
 }
 
-fn sdl_main() {
-    unsafe {
-        if !SDL_Init(SDL_INIT_VIDEO) {
-            let message = CStr::from_ptr(SDL_GetError());
-            let mes = message.to_str().unwrap();
-            panic!("{mes}");
-        }
-        let window = SDL_CreateWindow(
-            core::mem::transmute("title".as_bytes().as_ptr()),
-            300,
-            300,
-            0,
-        );
+/// Render the application. This is where you would draw the application UI. This example draws a
+/// greeting.
+fn draw(frame: &mut Frame) {
+    let greeting = Paragraph::new("Hello World!");
 
-        let renderer = SDL_CreateRenderer(window, core::ptr::null_mut());
-        loop {
-            for i in 0..255 {
-                let (r, g, b, a) = (i, 0, 0, 255);
-                SDL_SetRenderDrawColor(renderer, r, g, b, a);
-                SDL_RenderClear(renderer);
-                SDL_RenderPresent(renderer);
-                SDL_Delay(50);
-            }
+    frame.render_widget(greeting, frame.area());
+}
+
+// Allocator and panic handler setup
+use talc::{ClaimOnOom, Span, Talc, Talck};
+
+const HEAP_SIZE: usize = 1024 * 300; // 300KB heap size
+static mut HEAP: [u8; HEAP_SIZE] = [0u8; HEAP_SIZE];
+#[global_allocator]
+static ALLOCATOR: Talck<spin::Mutex<()>, ClaimOnOom> =
+    Talc::new(unsafe { ClaimOnOom::new(Span::from_array((&raw const HEAP).cast_mut())) }).lock();
+
+#[panic_handler]
+fn panic(panic_info: &core::panic::PanicInfo) -> ! {
+    unsafe {
+        let maybe_msg = alloc::string::ToString::to_string(&panic_info.message());
+        let msg = maybe_msg.as_ptr();
+        why2025_badge_sys::printf(b"panic: %s\n\0".as_ptr(), msg);
+        if let Some(location) = panic_info.location() {
+            why2025_badge_sys::printf(
+                b"in %s:%d\n\0".as_ptr(),
+                location.file().as_ptr(),
+                location.line() as i32,
+            );
+        } else {
+            why2025_badge_sys::printf(b"no location information available :(\n\0".as_ptr());
         }
-    };
+    }
+    loop {}
 }

@@ -9,6 +9,9 @@ repository = "https://github.com/zebreus/why2025-rust-starter"
 keywords = ["why2025", "badge"]
 categories = ["embedded", "no-std", "os"]
 
+[package.metadata.badgehub]
+name = "rust_starter"
+
 [profile.release]
 panic = 'abort'
 lto = "fat"
@@ -22,8 +25,4 @@ lazy_static = { version = "1.4.0", default-features = false, features = [
 ] }
 sdl3-sys = { version = "0.5.4", default-features = false, features = [
     "no-link",
-] }
-tinywasm = { version = "0.8.0", default-features = false, features = [
-    "parser",
-    "logging",
 ] }

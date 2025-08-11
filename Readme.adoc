@@ -1,6 +1,8 @@
 == Why2025 Badge Starter
 
-Run rust projects on the WHY2025 Badge. Just fork this repository and start coding.
+Run rust projects on the WHY2025 Badge. Just fork this repository and `cargo build` your app.
+
+This project uses the bindings provided by [why2025-badge-rust](https://github.com/zebreus/why2025-badge-rust).
 
 == Getting Started
 

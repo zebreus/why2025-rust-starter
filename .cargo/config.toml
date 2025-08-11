@@ -1,5 +1,5 @@
 [unstable]
-build-std = ["core", "alloc"]
+build-std = ["core", "alloc", "compiler_builtins"]
 
 [build]
 target = "riscv32imafc-unknown-none-elf"
